@@ -1,0 +1,19 @@
+.search {
+    &__wrapper {
+        display: flex;
+        gap: 30px;
+        height: 80px;
+        align-items: center;
+        padding: 0 60px;
+    }
+
+    &__btn {
+        background-color: rgb(5, 5, 137);
+        color: white;
+    }
+
+    &__input {
+        width: 200px;
+        height: 33px;
+    }
+}
