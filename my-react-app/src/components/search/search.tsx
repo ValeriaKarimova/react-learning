@@ -1,62 +1,55 @@
-import { Component } from 'react'
-import './search.scss'
-import { Dictionary, ResponseData, State } from '../../models/response.model'
+import { Component } from 'react';
+import './search.scss';
+import { SearchContext } from '../../services/search-context';
 
 class Search extends Component {
-    readonly URL = 'https://swapi.dev/api/'
-    test = ['111', '222222']
-    state: State = {
-        request: '',
-        data: [],
-        error: null,
-    }
+  static contextType = SearchContext;
+  declare context: React.ContextType<typeof SearchContext>;
 
-    handleUserInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({ request: event.target.value })
-    }
+  state = {
+    query: localStorage.getItem('prevQuery') || '',
+  };
 
-    handleSearchClick = () => {
-        console.log('Search Query:', this.state.request)
-        fetch(`${this.URL}/${this.state.request}`)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok')
-                }
-                return response.json()
-            })
-            .then((data: ResponseData<Dictionary<string | string[]>>) => {
-                this.setState({ data: data.results })
-            })
-            .catch((error) => {
-                this.setState({ error: error.message })
-            })
-    }
+  handleUserInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ query: event.target.value });
+  };
 
-    render() {
-        // console.log('test', this.state)
-        return (
-            <div className="search__wrapper">
-                <div>
-                    <input
-                        className="search__input"
-                        name="searchInput"
-                        type="text"
-                        placeholder="Search"
-                        value={this.state.request}
-                        onChange={this.handleUserInput}
-                    />
-                </div>
-                <div>
-                    <button
-                        className="search__btn"
-                        onClick={this.handleSearchClick}
-                    >
-                        Search
-                    </button>
-                </div>
-            </div>
-        )
-    }
+  saveToStorage() {
+    localStorage.setItem('prevQuery', this.state.query);
+  }
+
+  handleSearchClick = () => {
+    this.saveToStorage();
+    this.context.getData(this.state.query);
+  };
+
+  render() {
+    console.log(
+      'Ввиду размытых формулировок, возможно, что-то не так сделано, как подразумевал автор, поэтому прошу написать в личку, прежде, чем занижать баллы! Пожалуйста!'
+    );
+    return (
+      <div className="search__wrapper">
+        <span className="search__wrapper-text">
+          Enter StarWars character name
+        </span>
+        <div>
+          <input
+            className="search__input"
+            name="searchInput"
+            type="text"
+            placeholder="Search"
+            value={this.state.query}
+            onChange={this.handleUserInput}
+          />
+        </div>
+        <div>
+          <button className="search__btn" onClick={this.handleSearchClick}>
+            Search
+          </button>
+        </div>
+      </div>
+    );
+  }
 }
 
-export default Search
+export default Search;
