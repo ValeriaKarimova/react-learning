@@ -9,6 +9,10 @@ interface SearchContextData {
   loadPage: (num: number) => void;
 }
 
+interface myProps {
+  children: React.ReactNode;
+}
+
 const SearchContext = createContext<SearchContextData>({
   results: [],
   isLoading: false,
@@ -21,13 +25,17 @@ class SearchResultsProvider extends Component {
   readonly URL = 'https://swapi.dev/api/people?search=';
   searchTerm: string = '';
   pageNumber: number = 1;
-
+  declare props: myProps;
   state = {
     results: [],
     isLoading: false,
     pages: 0,
     error: false,
   };
+
+  constructor(props: myProps) {
+    super(props);
+  }
 
   loadPage(num: number) {
     // this.pageNumber = num;
@@ -68,6 +76,7 @@ class SearchResultsProvider extends Component {
     if (this.state.error) {
       throw new Error('No data found');
     }
+
     return (
       <SearchContext.Provider
         value={{
