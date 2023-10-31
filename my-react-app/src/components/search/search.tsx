@@ -14,6 +14,10 @@ class Search extends Component {
     this.setState({ query: event.target.value });
   };
 
+  componentDidMount() {
+    this.handleSearchClick();
+  }
+
   saveToStorage() {
     localStorage.setItem('prevQuery', this.state.query);
   }

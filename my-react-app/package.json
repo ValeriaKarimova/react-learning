@@ -9,7 +9,13 @@
     "preview": "vite preview",
     "format:fix": "npx prettier --write .",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "precommit": "npm run lint",
     "prepare": "husky install"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run precommit"
+    }
   },
   "dependencies": {
     "react": "^18.2.0",

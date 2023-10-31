@@ -38,7 +38,6 @@ class SearchResultsProvider extends Component {
   }
 
   loadPage(num: number) {
-    // this.pageNumber = num;
     this.getData(this.searchTerm, num);
   }
 
