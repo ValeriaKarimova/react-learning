@@ -1,8 +1,7 @@
 import './App.css';
 import Header from './components/header/header';
-import Results from './components/results/results';
+import MainBlock from './components/main-block/main-block';
 import ErrorBoundary from './services/error-boundary';
-import ErrorButton from './components/error-button/error-button';
 import { SearchResultsProvider } from './services/search-context';
 
 export default function App() {
@@ -10,8 +9,7 @@ export default function App() {
     <ErrorBoundary>
       <SearchResultsProvider>
         <Header />
-        <ErrorButton />
-        <Results></Results>
+        <MainBlock></MainBlock>
       </SearchResultsProvider>
     </ErrorBoundary>
   );

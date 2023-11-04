@@ -19,7 +19,7 @@ function SearchResultsProvider({ children }) {
   });
 
   let pageNumber: number = 1;
-  const URL = 'https://swapi.dev/api/people?search=';
+  const URL = 'https://swapi.dev/api/';
   let searchTerm: string = '';
 
   function loadPage(num: number) {
@@ -33,9 +33,10 @@ function SearchResultsProvider({ children }) {
     }));
     searchTerm = str;
     pageNumber = page ? page : 1;
-    const url = URL + searchTerm + '&page=' + pageNumber;
+    const url = URL + str;
+    console.log(pageNumber);
 
-    fetch(`${url}`)
+    fetch(url)
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -48,14 +49,14 @@ function SearchResultsProvider({ children }) {
             ...prevState,
             error: true,
           }));
+        } else {
+          setValue((prevState) => ({
+            ...prevState,
+            isLoading: false,
+            results: data.results,
+            pages: Math.ceil(data.count / 10),
+          }));
         }
-
-        setValue((prevState) => ({
-          ...prevState,
-          isLoading: false,
-          results: data.results,
-          pages: Math.ceil(data.count / 10),
-        }));
       })
       .catch(() => {
         console.log('Error!');

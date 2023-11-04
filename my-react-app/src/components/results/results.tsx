@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import './results.scss';
 import { SearchContext } from '../../services/search-context';
 import { Dictionary } from '../../models/response.model';
@@ -7,9 +7,20 @@ function Loader() {
   return <div className="loader"></div>;
 }
 
-export default function Results() {
+interface ResultsProps {
+  url: string;
+}
+
+export default function Results({ url }: ResultsProps) {
   const searchContext = useContext(SearchContext)?.searchContext;
+  console.log(url);
+
+  useEffect(() => {
+    if (searchContext) searchContext.getData(url);
+  }, [url]);
+
   if (searchContext) {
+    // searchContext.getData(url);
     const elements = [];
     for (let i = 1; i <= searchContext.pages; i++) {
       elements.push(
@@ -20,7 +31,7 @@ export default function Results() {
     }
 
     return (
-      <main className="main">
+      <div className="results-wrapper">
         {searchContext.isLoading ? (
           <Loader />
         ) : (
@@ -47,7 +58,7 @@ export default function Results() {
             )}
           </div>
         )}
-      </main>
+      </div>
     );
   }
 }
