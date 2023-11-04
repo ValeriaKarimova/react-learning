@@ -1,59 +1,53 @@
-import { Component } from 'react';
 import './search.scss';
+import { useContext, useState } from 'react';
+import { ButtonProps } from '../../models/response.model';
 import { SearchContext } from '../../services/search-context';
 
-class Search extends Component {
-  static contextType = SearchContext;
-  declare context: React.ContextType<typeof SearchContext>;
-
-  state = {
-    query: localStorage.getItem('prevQuery') || '',
-  };
-
-  handleUserInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ query: event.target.value });
-  };
-
-  componentDidMount() {
-    this.handleSearchClick();
-  }
-
-  saveToStorage() {
-    localStorage.setItem('prevQuery', this.state.query);
-  }
-
-  handleSearchClick = () => {
-    this.saveToStorage();
-    this.context.getData(this.state.query);
-  };
-
-  render() {
-    console.log(
-      'Ввиду размытых формулировок, возможно, что-то не так сделано, как подразумевал автор, поэтому прошу написать в личку, прежде, чем занижать баллы! Пожалуйста!'
-    );
-    return (
-      <div className="search__wrapper">
-        <span className="search__wrapper-text">
-          Enter StarWars character name
-        </span>
-        <div>
-          <input
-            className="search__input"
-            name="searchInput"
-            type="text"
-            placeholder="Search"
-            value={this.state.query}
-            onChange={this.handleUserInput}
-          />
-        </div>
-        <div>
-          <button className="search__btn" onClick={this.handleSearchClick}>
-            Search
-          </button>
-        </div>
-      </div>
-    );
-  }
+function MyButton({ onClick }: ButtonProps) {
+  return (
+    <div>
+      <button className="search__btn" onClick={onClick}>
+        Search
+      </button>
+    </div>
+  );
 }
 
-export default Search;
+export default function Search() {
+  const [query, setQuery] = useState(localStorage.getItem('prevQuery') || '');
+  const context = useContext(SearchContext)?.searchContext;
+
+  function handleUserInput(event: React.ChangeEvent<HTMLInputElement>) {
+    setQuery(event.target.value);
+  }
+
+  function saveToStorage() {
+    localStorage.setItem('prevQuery', query);
+  }
+
+  function handleSearchClick(): void {
+    saveToStorage();
+    if (context) {
+      context.getData(query);
+    }
+  }
+
+  return (
+    <div className="search__wrapper">
+      <span className="search__wrapper-text">
+        Enter StarWars character name
+      </span>
+      <div>
+        <input
+          className="search__input"
+          name="searchInput"
+          type="text"
+          placeholder="Search"
+          value={query}
+          onChange={handleUserInput}
+        />
+      </div>
+      <MyButton onClick={handleSearchClick} />
+    </div>
+  );
+}

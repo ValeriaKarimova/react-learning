@@ -1,51 +1,39 @@
-import React, { Component, createContext } from 'react';
-import { Dictionary, ResponseData } from '../models/response.model';
+import React, { createContext, useState } from 'react';
+import {
+  Dictionary,
+  MyContextData,
+  ResponseData,
+  SearchContextData,
+} from '../models/response.model';
 
-interface SearchContextData {
-  results: Array<Dictionary<string | string[]>>;
-  isLoading: boolean;
-  pages: number;
-  getData: (url: string) => void;
-  loadPage: (num: number) => void;
-}
+const SearchContext = createContext<MyContextData | undefined>(undefined);
 
-interface myProps {
-  children: React.ReactNode;
-}
-
-const SearchContext = createContext<SearchContextData>({
-  results: [],
-  isLoading: false,
-  pages: 1,
-  getData: () => {},
-  loadPage: () => {},
-});
-
-class SearchResultsProvider extends Component {
-  readonly URL = 'https://swapi.dev/api/people?search=';
-  searchTerm: string = '';
-  pageNumber: number = 1;
-  declare props: myProps;
-  state = {
+function SearchResultsProvider({ children }) {
+  const [searchContext, setValue] = useState<SearchContextData>({
     results: [],
     isLoading: false,
     pages: 0,
     error: false,
-  };
+    getData: getData,
+    loadPage: loadPage,
+  });
 
-  constructor(props: myProps) {
-    super(props);
+  let pageNumber: number = 1;
+  const URL = 'https://swapi.dev/api/people?search=';
+  let searchTerm: string = '';
+
+  function loadPage(num: number) {
+    getData(searchTerm, num);
   }
 
-  loadPage(num: number) {
-    this.getData(this.searchTerm, num);
-  }
-
-  getData(searchTerm: string, page?: number) {
-    this.setState({ isLoading: true });
-    this.searchTerm = searchTerm;
-    this.pageNumber = page ? page : 1;
-    const url = this.URL + searchTerm + '&page=' + this.pageNumber;
+  function getData(str: string, page?: number) {
+    setValue((prevState) => ({
+      ...prevState,
+      isLoading: true,
+    }));
+    searchTerm = str;
+    pageNumber = page ? page : 1;
+    const url = URL + searchTerm + '&page=' + pageNumber;
 
     fetch(`${url}`)
       .then((response) => {
@@ -56,40 +44,32 @@ class SearchResultsProvider extends Component {
       })
       .then((data: ResponseData<Dictionary<string | string[]>>) => {
         if (data.count === 0) {
-          this.setState({ error: true });
+          setValue((prevState) => ({
+            ...prevState,
+            error: true,
+          }));
         }
-        const state = {
-          results: data.results,
-          isLoading: false,
-          pages: Math.ceil(data.count / 10),
-        };
 
-        this.setState(state);
+        setValue((prevState) => ({
+          ...prevState,
+          isLoading: false,
+          results: data.results,
+          pages: Math.ceil(data.count / 10),
+        }));
       })
       .catch(() => {
         console.log('Error!');
       });
   }
 
-  render() {
-    if (this.state.error) {
-      throw new Error('No data found');
-    }
-
-    return (
-      <SearchContext.Provider
-        value={{
-          results: this.state.results,
-          isLoading: this.state.isLoading,
-          pages: this.state.pages,
-          getData: (url) => this.getData(url),
-          loadPage: (num) => this.loadPage(num),
-        }}
-      >
-        {this.props.children}
-      </SearchContext.Provider>
-    );
+  if (searchContext.error) {
+    throw new Error('No data found');
   }
-}
 
-export { SearchResultsProvider, SearchContext };
+  return (
+    <SearchContext.Provider value={{ searchContext, setValue }}>
+      {children}
+    </SearchContext.Provider>
+  );
+}
+export { SearchContext, SearchResultsProvider };

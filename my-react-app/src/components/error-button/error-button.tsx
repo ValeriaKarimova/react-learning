@@ -1,25 +1,19 @@
-import React, { Component } from 'react';
 import './error-button.scss';
+import React, { useState } from 'react';
 
-class ErrorButton extends Component {
-  state = {
-    error: false,
-  };
+export default function ErrorButton() {
+  const [err, changeErr] = useState(false);
 
-  throwError = () => {
-    this.setState({ error: !this.state.error });
-  };
-
-  render() {
-    if (this.state.error) {
-      throw new Error('Simulated error from button click');
-    }
-    return (
-      <div className="err-btn">
-        <button onClick={this.throwError}>Throw Error</button>
-      </div>
-    );
+  function throwError() {
+    changeErr(!err);
   }
-}
 
-export default ErrorButton;
+  if (err) {
+    throw new Error('Simulated error from button click');
+  }
+  return (
+    <div className="err-btn">
+      <button onClick={throwError}>Throw Error</button>
+    </div>
+  );
+}

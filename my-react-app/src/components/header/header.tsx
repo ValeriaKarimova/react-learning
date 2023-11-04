@@ -1,15 +1,10 @@
-import { Component } from 'react';
-import Search from '../search/search';
 import './header.scss';
+import Search from '../search/search';
 
-class Header extends Component {
-  render() {
-    return (
-      <header className="header">
-        <Search></Search>
-      </header>
-    );
-  }
+export default function Header() {
+  return (
+    <header className="header">
+      <Search />
+    </header>
+  );
 }
-
-export default Header;

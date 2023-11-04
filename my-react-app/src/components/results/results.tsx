@@ -1,18 +1,19 @@
-import { Component } from 'react';
+import { useContext } from 'react';
 import './results.scss';
 import { SearchContext } from '../../services/search-context';
 import { Dictionary } from '../../models/response.model';
-import Loader from '../loader/loader';
 
-class Results extends Component {
-  static contextType = SearchContext;
+function Loader() {
+  return <div className="loader"></div>;
+}
 
-  declare context: React.ContextType<typeof SearchContext>;
-  render() {
+export default function Results() {
+  const searchContext = useContext(SearchContext)?.searchContext;
+  if (searchContext) {
     const elements = [];
-    for (let i = 1; i <= this.context.pages; i++) {
+    for (let i = 1; i <= searchContext.pages; i++) {
       elements.push(
-        <span onClick={() => this.context.loadPage(i)} key={i}>
+        <span onClick={() => searchContext.loadPage(i)} key={i}>
           {i}
         </span>
       );
@@ -20,12 +21,12 @@ class Results extends Component {
 
     return (
       <main className="main">
-        {this.context.isLoading ? (
-          <Loader></Loader>
+        {searchContext.isLoading ? (
+          <Loader />
         ) : (
           <div>
             <ul>
-              {this.context.results.map(
+              {searchContext.results.map(
                 (item: Dictionary<string | string[]>, index: number) => (
                   <li key={index}>
                     <h5>{item.name}</h5>
@@ -39,7 +40,7 @@ class Results extends Component {
                 )
               )}
             </ul>
-            {this.context.pages <= 1 ? (
+            {searchContext.pages <= 1 ? (
               ''
             ) : (
               <div className="paginator">Pages: {elements}</div>
@@ -50,5 +51,3 @@ class Results extends Component {
     );
   }
 }
-
-export default Results;
