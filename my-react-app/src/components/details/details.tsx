@@ -4,12 +4,16 @@ import { Dictionary, ResponseData } from '../../models/response.model';
 import { useOutletContext, NavLink, useNavigate } from 'react-router-dom';
 import Loader from '../loader/loader';
 
+interface OutletContext {
+  detailsUrl: string;
+}
+
 export default function Details() {
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
   const [backUrl, setBack] = useState('');
-  const [detailsInfo, setDetailsInfo] = useState([]);
+  const [detailsInfo, setDetailsInfo] = useState([['']]);
   const [isLoading, setLoader] = useState(false);
-  const value = useOutletContext();
+  const value: OutletContext = useOutletContext();
   const urlArr = value ? value.detailsUrl.split('/') : [];
   const navigate = useNavigate();
 
@@ -43,7 +47,7 @@ export default function Details() {
 
   function handleClickOutside() {
     const el = ref?.current;
-    if (!el || el.contains(event.target as Node)) {
+    if (!el || el.contains(event!.target as Node)) {
       return;
     }
     navigate(backUrl);

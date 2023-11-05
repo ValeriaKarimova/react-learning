@@ -21,9 +21,10 @@ export default function Results({ url }: ResultsProps) {
     setDetailsUrl(item);
   }
 
-  function handleChange(event) {
-    setSelected(event.target.value);
-    searchContext?.changePagination(event.target.value);
+  function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
+    const target = event.target as HTMLSelectElement;
+    setSelected(+target.value);
+    searchContext?.changePagination(+target.value);
   }
 
   useEffect(() => {
@@ -55,11 +56,13 @@ export default function Results({ url }: ResultsProps) {
                 {searchContext.results &&
                   searchContext.results.map(
                     (item: Dictionary<string | string[]>, index: number) => (
-                      <NavLink
+                      typeof item.name === 'string' 
+                        && typeof item.title === 'string' 
+                        && <NavLink
                         to={item.name ? item.name : item.title}
                         key={index}
                       >
-                        <li onClick={() => openDetails(item.url)}>
+                        <li onClick={() => openDetails(item.url as string)}>
                           <h5>{item.name ? item.name : item.title}</h5>
                         </li>
                       </NavLink>

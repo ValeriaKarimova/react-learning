@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, ReactNode } from 'react';
 import {
   Dictionary,
   MyContextData,
@@ -7,9 +7,13 @@ import {
 } from '../models/response.model';
 import { useNavigate } from 'react-router-dom';
 
+interface ChildrenProp {
+  children: ReactNode;
+}
+
 const SearchContext = createContext<MyContextData | undefined>(undefined);
 
-function SearchResultsProvider({ children }) {
+function SearchResultsProvider({ children }: ChildrenProp) {
   const navigate = useNavigate();
   const [searchContext, setValue] = useState<SearchContextData>({
     results: [],
