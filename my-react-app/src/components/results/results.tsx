@@ -11,16 +11,25 @@ interface ResultsProps {
 }
 
 export default function Results({ url }: ResultsProps) {
+  const options = [{ value: 10 }, { value: 20 }, { value: 30 }];
+
   const searchContext = useContext(SearchContext)?.searchContext;
   const [detailsUrl, setDetailsUrl] = useState('');
+  const [selected, setSelected] = useState(options[0].value);
 
   function openDetails(item: string) {
     setDetailsUrl(item);
   }
 
+  function handleChange(event) {
+    setSelected(event.target.value);
+    searchContext?.changePagination(event.target.value);
+  }
+
   useEffect(() => {
     if (searchContext) {
       searchContext.changeContext(url);
+      setSelected(options[0].value);
     }
   }, [url]);
 
@@ -39,26 +48,41 @@ export default function Results({ url }: ResultsProps) {
         {searchContext.isLoading ? (
           <Loader />
         ) : (
-        <><Header />
-        <div className="results">
-              <ul>
-                {searchContext.results.map(
-                  (item: Dictionary<string | string[]>, index: number) => (
-                    <NavLink to={item.name} key={index}>
-                      <li onClick={() => openDetails(item.url)}>
-                        <h5>{item.name}</h5>
-                      </li>
-                    </NavLink>
-                  )
-                )}
+          <>
+            <Header />
+            <div className="results">
+              <ul className="results__list">
+                {searchContext.results &&
+                  searchContext.results.map(
+                    (item: Dictionary<string | string[]>, index: number) => (
+                      <NavLink
+                        to={item.name ? item.name : item.title}
+                        key={index}
+                      >
+                        <li onClick={() => openDetails(item.url)}>
+                          <h5>{item.name ? item.name : item.title}</h5>
+                        </li>
+                      </NavLink>
+                    )
+                  )}
               </ul>
               {searchContext.pages <= 1 ? (
                 ''
               ) : (
-                <div className="paginator">Pages: {elements}</div>
+                <div className="paginator__wrapper">
+                  <select value={selected} onChange={handleChange}>
+                    {options.map((el, idx) => (
+                      <option key={idx} value={el.value}>
+                        {el.value}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="paginator">Pages: {elements}</div>
+                </div>
               )}
-            <Outlet context={{ detailsUrl }} />
-            </div></>
+              <Outlet context={{ detailsUrl }} />
+            </div>
+          </>
         )}
       </div>
     );

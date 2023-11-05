@@ -1,6 +1,5 @@
-// import { useContext, useState } from 'react';
 import React, { useEffect, useState } from 'react';
-
+import Loader from '../loader/loader';
 import './categories.scss';
 import { NavLink, Outlet } from 'react-router-dom';
 import { Dictionary, ResponseData } from '../../models/response.model';
@@ -11,6 +10,7 @@ export interface Category {
 }
 
 export default function Categories() {
+  const [isLoading, setLoader] = useState(false);
   const [categories, update] = useState([
     {
       name: '',
@@ -20,6 +20,7 @@ export default function Categories() {
 
   useEffect(() => {
     (function getData() {
+      setLoader(true);
       fetch('https://swapi.dev/api')
         .then((response) => {
           if (!response.ok) {
@@ -28,13 +29,14 @@ export default function Categories() {
           return response.json();
         })
         .then((data: ResponseData<Dictionary<string | string[]>>) => {
+          setLoader(false);
           if (categories.length > 1) return;
           createArray(data);
         });
     })();
-  });
+  }, []);
 
-  function createArray(data) {
+  function createArray(data: ResponseData<Dictionary<string | string[]>>) {
     const objectArr: Array<string[]> = Object.entries(data);
     objectArr.map((el) => {
       const category: Category = {
@@ -45,7 +47,9 @@ export default function Categories() {
     });
   }
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <>
       <h1>Choose the Category</h1>
       <div className="categories-wrapper">

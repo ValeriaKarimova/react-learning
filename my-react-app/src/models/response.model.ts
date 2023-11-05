@@ -36,6 +36,7 @@ export interface SearchContextData {
   getData: (url?: string) => void;
   loadPage: (num: number) => void;
   changeContext: (value: string) => void;
+  changePagination: (num: number) => void;
 }
 
 export interface MyContextData {
