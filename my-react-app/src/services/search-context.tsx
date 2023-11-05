@@ -40,8 +40,8 @@ function SearchResultsProvider({ children }) {
     }));
     searchTerm = navUrl ? navUrl : '';
     pageNumber = page ? page : 1;
-    const url = navUrl ? URL + category + '/?search=' + searchTerm + '&page=' + pageNumber: URL + category + '&page=' + pageNumber;
-    console.log(url);
+    const url = navUrl ? URL + category + '?search=' + searchTerm : URL + category;
+    console.log(pageNumber);
 
     fetch(url)
       .then((response) => {

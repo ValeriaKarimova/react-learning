@@ -35,7 +35,7 @@ export default function Search() {
   return (
     <div className="search__wrapper">
       <span className="search__wrapper-text">
-        Enter StarWars character name
+        Search by category
       </span>
       <div>
         <input

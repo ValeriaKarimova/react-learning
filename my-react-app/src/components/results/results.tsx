@@ -3,10 +3,8 @@ import './results.scss';
 import { SearchContext } from '../../services/search-context';
 import { NavLink, Outlet } from 'react-router-dom';
 import { Dictionary } from '../../models/response.model';
-
-function Loader() {
-  return <div className="loader"></div>;
-}
+import Header from '../header/header';
+import Loader from '../loader/loader';
 
 interface ResultsProps {
   url: string;
@@ -15,7 +13,6 @@ interface ResultsProps {
 export default function Results({ url }: ResultsProps) {
   const searchContext = useContext(SearchContext)?.searchContext;
   const [detailsUrl, setDetailsUrl] = useState('');
-  // console.log(detailsUrl)
 
   function openDetails(item: string) {
     setDetailsUrl(item);
@@ -38,30 +35,31 @@ export default function Results({ url }: ResultsProps) {
     }
 
     return (
-      <div className="results-wrapper">
+      <div>
         {searchContext.isLoading ? (
           <Loader />
         ) : (
-          <div className="results">
-            <ul>
-              {searchContext.results.map(
-                (item: Dictionary<string | string[]>, index: number) => (
-                  <NavLink to={item.name} key={index}>
-                    <li onClick={() => openDetails(item.url)}>
-                      <h5>{item.name}</h5>
-                    </li>
-                  </NavLink>
-                )
+        <><Header />
+        <div className="results">
+              <ul>
+                {searchContext.results.map(
+                  (item: Dictionary<string | string[]>, index: number) => (
+                    <NavLink to={item.name} key={index}>
+                      <li onClick={() => openDetails(item.url)}>
+                        <h5>{item.name}</h5>
+                      </li>
+                    </NavLink>
+                  )
+                )}
+              </ul>
+              {searchContext.pages <= 1 ? (
+                ''
+              ) : (
+                <div className="paginator">Pages: {elements}</div>
               )}
-            </ul>
-            {searchContext.pages <= 1 ? (
-              ''
-            ) : (
-              <div className="paginator">Pages: {elements}</div>
-            )}
-          </div>
+            <Outlet context={{ detailsUrl }} />
+            </div></>
         )}
-        <Outlet context={{ detailsUrl }} />
       </div>
     );
   }
