@@ -16,25 +16,32 @@ function SearchResultsProvider({ children }) {
     error: false,
     getData: getData,
     loadPage: loadPage,
+    changeContext: changeContext,
   });
 
   let pageNumber: number = 1;
   const URL = 'https://swapi.dev/api/';
   let searchTerm: string = '';
+  let category = '';
 
   function loadPage(num: number) {
     getData(searchTerm, num);
   }
 
-  function getData(str: string, page?: number) {
+  function changeContext(value: string) {
+    category = value;
+    getData();
+  }
+
+  function getData(navUrl?: string, page?: number) {
     setValue((prevState) => ({
       ...prevState,
       isLoading: true,
     }));
-    searchTerm = str;
+    searchTerm = navUrl ? navUrl : '';
     pageNumber = page ? page : 1;
-    const url = URL + str;
-    console.log(pageNumber);
+    const url = navUrl ? URL + category + '/?search=' + searchTerm + '&page=' + pageNumber: URL + category + '&page=' + pageNumber;
+    console.log(url);
 
     fetch(url)
       .then((response) => {

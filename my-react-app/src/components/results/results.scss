@@ -1,6 +1,8 @@
 .results-wrapper {
   padding: 20px;
-  position: relative;
+  // position: relative;
+  display: flex;
+  justify-content: space-between;
 
   li {
     text-decoration: none;
@@ -20,15 +22,15 @@
 
 .paginator {
   position: absolute;
-  right: 20px;
+  left: 50px;
   display: flex;
   gap: 15px;
   font-size: 23px;
   font-weight: 500;
   width: 30%;
-  justify-content: center;
+  /* justify-content: center; */
   color: blue;
-  bottom: 62px;
+  bottom: 60px;
 
   span {
     cursor: pointer;

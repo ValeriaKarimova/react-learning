@@ -9,6 +9,10 @@ export interface ButtonProps {
   onClick: () => void;
 }
 
+export interface StringProp {
+  value: string;
+}
+
 export interface State {
   request: string;
   data: Array<Dictionary<string | string[]>>;
@@ -29,8 +33,9 @@ export interface SearchContextData {
   isLoading: boolean;
   pages: number;
   error: boolean;
-  getData: (url: string) => void;
+  getData: (url?: string) => void;
   loadPage: (num: number) => void;
+  changeContext: (value: string) => void;
 }
 
 export interface MyContextData {
