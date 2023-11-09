@@ -33,9 +33,11 @@ export interface SearchContextData {
   isLoading: boolean;
   pages: number;
   error: boolean;
+  query: string;
   getData: (url?: string) => void;
   loadPage: (num: number) => void;
   changeContext: (value: string) => void;
+  setSearchQuery: (value: string) => void;
   changePagination: (num: number) => void;
 }
 

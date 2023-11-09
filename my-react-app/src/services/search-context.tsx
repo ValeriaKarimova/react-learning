@@ -16,13 +16,15 @@ const SearchContext = createContext<MyContextData | undefined>(undefined);
 function SearchResultsProvider({ children }: ChildrenProp) {
   const navigate = useNavigate();
   const [searchContext, setValue] = useState<SearchContextData>({
-    results: [],
-    isLoading: false,
     pages: 0,
+    query: '',
+    results: [],
     error: false,
+    isLoading: false,
     getData: getData,
     loadPage: loadPage,
     changeContext: changeContext,
+    setSearchQuery: setSearchQuery,
     changePagination: changePagination,
   });
 
@@ -38,6 +40,15 @@ function SearchResultsProvider({ children }: ChildrenProp) {
     responseResults = [];
     perPage = num;
     loadPage(1, false);
+  }
+
+  function setSearchQuery(value: string) {
+    setValue((prevState) => ({
+      ...prevState,
+      query: value,
+    }));
+
+    console.log(searchContext);
   }
 
   function loadPage(num: number, isPagination: boolean = true) {
@@ -59,6 +70,7 @@ function SearchResultsProvider({ children }: ChildrenProp) {
 
   function changeContext(value: string) {
     if (category !== value) {
+      setSearchQuery('');
       category = value;
       responseResults = [];
       perPage = 10;

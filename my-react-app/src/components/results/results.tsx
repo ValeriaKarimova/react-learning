@@ -56,8 +56,12 @@ export default function Results({ url }: ResultsProps) {
                 {searchContext.results &&
                   searchContext.results.map(
                     (item: Dictionary<string | string[]>, index: number) => (
-                        <NavLink
-                        to={item.name ? item.name as string : item.title as string}
+                      <NavLink
+                        to={
+                          item.name
+                            ? (item.name as string)
+                            : (item.title as string)
+                        }
                         key={index}
                       >
                         <li onClick={() => openDetails(item.url as string)}>

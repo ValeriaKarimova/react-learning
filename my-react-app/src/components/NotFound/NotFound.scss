@@ -1,0 +1,15 @@
+.page-404 {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
+  h2 {
+    color: rgba(253, 68, 48, 1);
+    font-size: 28px;
+  }
+
+  p {
+    font-size: 20px;
+  }
+}
