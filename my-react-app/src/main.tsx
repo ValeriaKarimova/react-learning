@@ -10,35 +10,20 @@ import {
 import Results from './components/results/results';
 import Categories from './components/categories/categories';
 import Details from './components/details/details';
-import NotFound from './components/NotFound/NotFound';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <>
-      <Route path="/" element={<App />}>
-        <Route path="" element={<Categories />}>
-          <Route path="people" element={<Results url="people" />}>
-            <Route path=":id" element={<Details />} />
-          </Route>
-          <Route path="planets" element={<Results url="planets" />}>
-            <Route path=":id" element={<Details />} />
-          </Route>
-          <Route path="films" element={<Results url="films" />}>
-            <Route path=":id" element={<Details />} />
-          </Route>
-          <Route path="species" element={<Results url="species" />}>
-            <Route path=":id" element={<Details />} />
-          </Route>
-          <Route path="vehicles" element={<Results url="vehicles" />}>
-            <Route path=":id" element={<Details />} />
-          </Route>
-          <Route path="starships" element={<Results url="starships" />}>
-            <Route path=":id" element={<Details />} />
-          </Route>
-        </Route>
+    <Route path="/" element={<App />}>
+      <Route path="" element={<Categories />}>
+        {['people', 'planets', 'films', 'species', 'vehicles', 'starships'].map(
+          (key) => (
+            <Route key={key} path={key} element={<Results url={key} />}>
+              <Route path=":id" element={<Details />} />
+            </Route>
+          )
+        )}
       </Route>
-      <Route path="*" element={<NotFound />} />
-    </>
+    </Route>
   )
 );
 
