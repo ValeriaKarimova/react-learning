@@ -9,6 +9,21 @@ export interface Category {
   url: string;
 }
 
+function createArray(
+  data: ResponseData<Dictionary<string | string[]>>
+): Category[] {
+  const objectArr: Array<string[]> = Object.entries(data);
+  const categories: Category[] = [];
+  objectArr.map((el) => {
+    const category: Category = {
+      name: el[0],
+      url: el[1],
+    };
+    categories.push(category);
+  });
+  return categories;
+}
+
 export default function Categories() {
   const [isLoading, setLoader] = useState(false);
   const [categories, update] = useState([
@@ -31,21 +46,11 @@ export default function Categories() {
         .then((data: ResponseData<Dictionary<string | string[]>>) => {
           setLoader(false);
           if (categories.length > 1) return;
-          createArray(data);
+          const caregories = createArray(data);
+          update(caregories);
         });
     })();
   }, []);
-
-  function createArray(data: ResponseData<Dictionary<string | string[]>>) {
-    const objectArr: Array<string[]> = Object.entries(data);
-    objectArr.map((el) => {
-      const category: Category = {
-        name: el[0],
-        url: el[1],
-      };
-      update((prevState) => [...prevState, category]);
-    });
-  }
 
   return isLoading ? (
     <Loader />

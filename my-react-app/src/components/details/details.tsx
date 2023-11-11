@@ -8,6 +8,20 @@ interface OutletContext {
   detailsUrl: string;
 }
 
+function formatData(
+  data: ResponseData<Dictionary<string | string[]>>
+): Array<string[]> {
+  return Object.entries(data);
+}
+
+function handleClickOutside(ref: React.RefObject<HTMLDivElement>): boolean {
+  const el = ref?.current;
+  if (!el || el.contains(event!.target as Node)) {
+    return false;
+  }
+  return true;
+}
+
 export default function Details() {
   const ref = useRef<HTMLDivElement>(null);
   const [backUrl, setBack] = useState('');
@@ -24,7 +38,8 @@ export default function Details() {
     }
 
     setBack('/' + urlArr[urlArr.length - 3]);
-    (function getData() {
+
+    const getData = () => {
       setLoader(true);
       fetch(url)
         .then((response) => {
@@ -34,27 +49,19 @@ export default function Details() {
           return response.json();
         })
         .then((data: ResponseData<Dictionary<string | string[]>>) => {
-          formatData(data);
+          setDetailsInfo(formatData(data));
           setLoader(false);
         });
-    })();
+    };
+
+    getData();
   }, [value]);
 
-  function formatData(data: ResponseData<Dictionary<string | string[]>>) {
-    const info = Object.entries(data);
-    setDetailsInfo(info);
-  }
-
-  function handleClickOutside() {
-    const el = ref?.current;
-    if (!el || el.contains(event!.target as Node)) {
-      return;
-    }
-    navigate(backUrl);
-  }
-
   return (
-    <div className="outside-area" onClick={handleClickOutside}>
+    <div
+      className="outside-area"
+      onClick={() => (handleClickOutside(ref) ? navigate(backUrl) : null)}
+    >
       <div className="details__wrapper" ref={ref}>
         {isLoading ? (
           <Loader />

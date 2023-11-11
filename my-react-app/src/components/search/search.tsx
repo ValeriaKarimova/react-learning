@@ -1,7 +1,7 @@
-import './search.scss';
 import { useContext, useEffect, useState } from 'react';
 import { ButtonProps } from '../../models/response.model';
 import { SearchContext } from '../../services/search-context';
+import './search.scss';
 
 function MyButton({ onClick }: ButtonProps) {
   return (
