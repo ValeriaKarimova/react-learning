@@ -22,8 +22,7 @@ export default function Results({ url }: ResultsProps) {
     const target = event.target as HTMLSelectElement;
     setSelected(+target.value);
     searchContext?.changePagination(+target.value);
-    const param = `?page=${+target.value}`;
-    navigate({ search: param });
+    navigate({ search: `?page=${+target.value}` });
   }
 
   useEffect(() => {

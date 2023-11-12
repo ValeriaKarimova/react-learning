@@ -5,7 +5,6 @@ import {
   ResponseData,
   SearchContextData,
 } from '../models/response.model';
-// import { useNavigate } from 'react-router-dom';
 
 export interface ChildrenProp {
   children: ReactNode;

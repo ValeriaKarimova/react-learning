@@ -1,5 +1,3 @@
-// useOutletContext.mock.ts
-
 import { createContext } from 'react';
 
 export const useOutletContext = jest.fn(() => ({

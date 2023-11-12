@@ -61,7 +61,7 @@ export default function Categories() {
         {categories.map(
           (el: Dictionary<string | string[]>, idx: number) =>
             el.name !== '' && (
-              <NavLink to={`/${el.name}`} key={idx}>
+              <NavLink to={`/${el.name}`} key={idx} role="link">
                 <div className="categories-item">{el.name}</div>
               </NavLink>
             )
