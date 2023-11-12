@@ -3,7 +3,7 @@ import { ButtonProps } from '../../models/response.model';
 import { SearchContext } from '../../services/search-context';
 import './search.scss';
 
-function MyButton({ onClick }: ButtonProps) {
+export function MyButton({ onClick }: ButtonProps) {
   return (
     <div>
       <button className="search__btn" onClick={onClick}>
@@ -15,11 +15,10 @@ function MyButton({ onClick }: ButtonProps) {
 
 export default function Search() {
   const context = useContext(SearchContext)?.searchContext;
-  const [query, setQuery] = useState(localStorage.getItem('prevQuery') || '');
+  const [query, setQuery] = useState(localStorage.getItem('searchQiery') || '');
 
   useEffect(() => {
     setQuery(context?.query || '');
-    console.log(query);
   }, [context?.query]);
 
   function handleUserInput(event: React.ChangeEvent<HTMLInputElement>) {
@@ -27,6 +26,7 @@ export default function Search() {
   }
 
   function handleSearchClick(): void {
+    window.localStorage.setItem('searchQiery', query);
     context?.setSearchQuery(query);
     if (context) {
       context.getData(query);

@@ -9,4 +9,5 @@ export default {
     '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/src/tests/mocks/fileMock.ts',
     '\\.(scss|less|css)$': '<rootDir>/src/tests/mocks/styleMock.ts',
   },
+  setupFiles: ['<rootDir>/src/tests/mocks/localStorageMock.ts'],
 };

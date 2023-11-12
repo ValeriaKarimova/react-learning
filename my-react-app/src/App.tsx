@@ -5,10 +5,13 @@ import { SearchResultsProvider } from './services/search-context';
 
 export default function App() {
   return (
-    <ErrorBoundary>
-      <SearchResultsProvider>
-        <MainBlock></MainBlock>
-      </SearchResultsProvider>
-    </ErrorBoundary>
+    <>
+      <ErrorBoundary>
+        <SearchResultsProvider>
+          <h1>CASE</h1>
+          <MainBlock></MainBlock>
+        </SearchResultsProvider>
+      </ErrorBoundary>
+    </>
   );
 }

@@ -23,27 +23,27 @@
         </h1>
         <div class="clearfix">
           <div class="fl pad1y space-right2">
-            <span class="strong">100% </span>
+            <span class="strong">60% </span>
             <span class="quiet">Statements</span>
-            <span class="fraction">10/10</span>
+            <span class="fraction">6/10</span>
           </div>
 
           <div class="fl pad1y space-right2">
-            <span class="strong">100% </span>
+            <span class="strong">0% </span>
             <span class="quiet">Branches</span>
-            <span class="fraction">1/1</span>
+            <span class="fraction">0/1</span>
           </div>
 
           <div class="fl pad1y space-right2">
-            <span class="strong">100% </span>
+            <span class="strong">50% </span>
             <span class="quiet">Functions</span>
-            <span class="fraction">4/4</span>
+            <span class="fraction">2/4</span>
           </div>
 
           <div class="fl pad1y space-right2">
-            <span class="strong">100% </span>
+            <span class="strong">60% </span>
             <span class="quiet">Lines</span>
-            <span class="fraction">10/10</span>
+            <span class="fraction">6/10</span>
           </div>
         </div>
         <p class="quiet">
@@ -57,7 +57,7 @@
           </div>
         </template>
       </div>
-      <div class="status-line high"></div>
+      <div class="status-line medium"></div>
       <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -110,29 +110,29 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -153,18 +153,18 @@ class ErrorBoundary extends Component&lt;ErrorBoundaryProps, ErrorBoundaryState&
     this.state = { hasError: false };
   }
 &nbsp;
-  static getDerivedStateFromError(_: Error): ErrorBoundaryState {
-    console.log(_);
-    return { hasError: true };
+<span class="fstat-no" title="function not covered" >  static </span>getDerivedStateFromError(_: Error): ErrorBoundaryState {
+<span class="cstat-no" title="statement not covered" >    console.log(_);</span>
+<span class="cstat-no" title="statement not covered" >    return { hasError: true };</span>
   }
 &nbsp;
-  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    console.error('Error caught by ErrorBoundary:', error, errorInfo);
+<span class="fstat-no" title="function not covered" >  componentDidCatch(</span>error: Error, errorInfo: ErrorInfo): void {
+<span class="cstat-no" title="statement not covered" >    console.error('Error caught by ErrorBoundary:', error, errorInfo);</span>
   }
 &nbsp;
   render(): ReactNode {
-    if (this.state.hasError) {
-      return (
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (this.state.hasError) {
+<span class="cstat-no" title="statement not covered" >      return (</span>
         &lt;h1&gt;
           Something went wrong. Please refresh the page or try again later.
         &lt;/h1&gt;
@@ -190,7 +190,7 @@ export default ErrorBoundary;
         rel="noopener noreferrer"
         >istanbul</a
       >
-      at 2023-11-09T18:10:53.123Z
+      at 2023-11-12T17:41:03.132Z
     </div>
     <script src="../../prettify.js"></script>
     <script>

@@ -23,27 +23,27 @@
         </h1>
         <div class="clearfix">
           <div class="fl pad1y space-right2">
-            <span class="strong">26.66% </span>
+            <span class="strong">93.75% </span>
             <span class="quiet">Statements</span>
-            <span class="fraction">4/15</span>
+            <span class="fraction">15/16</span>
           </div>
 
           <div class="fl pad1y space-right2">
-            <span class="strong">0% </span>
+            <span class="strong">80% </span>
             <span class="quiet">Branches</span>
-            <span class="fraction">0/5</span>
+            <span class="fraction">4/5</span>
           </div>
 
           <div class="fl pad1y space-right2">
-            <span class="strong">0% </span>
+            <span class="strong">100% </span>
             <span class="quiet">Functions</span>
-            <span class="fraction">0/5</span>
+            <span class="fraction">5/5</span>
           </div>
 
           <div class="fl pad1y space-right2">
-            <span class="strong">26.66% </span>
+            <span class="strong">93.75% </span>
             <span class="quiet">Lines</span>
-            <span class="fraction">4/15</span>
+            <span class="fraction">15/16</span>
           </div>
         </div>
         <p class="quiet">
@@ -57,7 +57,7 @@
           </div>
         </template>
       </div>
-      <div class="status-line low"></div>
+      <div class="status-line high"></div>
       <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -116,8 +116,8 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -127,26 +127,26 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -168,8 +168,8 @@ import { ButtonProps } from '../../models/response.model';
 import { SearchContext } from '../../services/search-context';
 import './search.scss';
 &nbsp;
-function <span class="fstat-no" title="function not covered" >MyButton(</span>{ onClick }: ButtonProps) {
-<span class="cstat-no" title="statement not covered" >  return (</span>
+export function MyButton({ onClick }: ButtonProps) {
+  return (
     &lt;div&gt;
       &lt;button className="search__btn" onClick={onClick}&gt;
         Search
@@ -178,27 +178,27 @@ function <span class="fstat-no" title="function not covered" >MyButton(</span>{ 
   );
 }
 &nbsp;
-export default function <span class="fstat-no" title="function not covered" >Search(</span>) {
-  const context = <span class="cstat-no" title="statement not covered" >useContext(SearchContext)?.searchContext;</span>
-  const [query, setQuery] = <span class="cstat-no" title="statement not covered" >useState(localStorage.getItem('prevQuery') || '');</span>
+export default function Search() {
+  const context = useContext(SearchContext)?.searchContext;
+  const [query, setQuery] = useState(localStorage.getItem('searchQiery') || '');
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  useEffect(<span class="fstat-no" title="function not covered" >() =</span>&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    setQuery(context?.query || '');</span>
-<span class="cstat-no" title="statement not covered" >    console.log(query);</span>
+  useEffect(() =&gt; {
+    setQuery(context?.query || '');
   }, [context?.query]);
 &nbsp;
-  function <span class="fstat-no" title="function not covered" >handleUserInput(</span>event: React.ChangeEvent&lt;HTMLInputElement&gt;) {
-<span class="cstat-no" title="statement not covered" >    setQuery(event.target.value);</span>
+  function handleUserInput(event: React.ChangeEvent&lt;HTMLInputElement&gt;) {
+    setQuery(event.target.value);
   }
 &nbsp;
-  function <span class="fstat-no" title="function not covered" >handleSearchClick(</span>): void {
-<span class="cstat-no" title="statement not covered" >    context?.setSearchQuery(query);</span>
-<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (context) {</span>
+  function handleSearchClick(): void {
+    window.localStorage.setItem('searchQiery', query);
+    context?.setSearchQuery(query);
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (context) {
 <span class="cstat-no" title="statement not covered" >      context.getData(query);</span>
     }
   }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return (</span>
+  return (
     &lt;div className="search__wrapper"&gt;
       &lt;span className="search__wrapper-text"&gt;Search by category&lt;/span&gt;
       &lt;div&gt;
@@ -229,7 +229,7 @@ export default function <span class="fstat-no" title="function not covered" >Sea
         rel="noopener noreferrer"
         >istanbul</a
       >
-      at 2023-11-09T18:10:53.123Z
+      at 2023-11-12T17:41:03.132Z
     </div>
     <script src="../../../prettify.js"></script>
     <script>
