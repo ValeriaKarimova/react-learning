@@ -7,14 +7,13 @@ import {
 } from '../models/response.model';
 // import { useNavigate } from 'react-router-dom';
 
-interface ChildrenProp {
+export interface ChildrenProp {
   children: ReactNode;
 }
 
 const SearchContext = createContext<MyContextData | undefined>(undefined);
 
 function SearchResultsProvider({ children }: ChildrenProp) {
-  // const navigate = useNavigate();
   const [searchContext, setValue] = useState<SearchContextData>({
     pages: 0,
     query: '',
@@ -47,16 +46,11 @@ function SearchResultsProvider({ children }: ChildrenProp) {
       ...prevState,
       query: value,
     }));
-
-    console.log(searchContext);
   }
 
   function loadPage(num: number, isPagination: boolean = true) {
     responseResults = [];
-    if (isPagination) {
-      // const param = `?page=${num}`;
-      // navigate({ search: param });
-    } else {
+    if (!isPagination) {
       pageNumber = 1;
     }
 
@@ -96,7 +90,6 @@ function SearchResultsProvider({ children }: ChildrenProp) {
     if (term !== searchTerm) {
       responseResults = [];
       pageNumber = 1;
-      // navigate({ search: '' });
     }
 
     searchTerm = term ? term : '';

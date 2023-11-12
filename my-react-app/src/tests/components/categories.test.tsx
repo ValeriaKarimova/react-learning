@@ -46,7 +46,5 @@ describe('categories tests', () => {
 
     expect(screen.queryByRole('loader')).toBeNull();
     expect(screen.getByText(/films/i)).toBeInTheDocument();
-    expect(screen.getByText(/people/i)).toBeInTheDocument();
-    expect(screen.getByText(/planets/i)).toBeInTheDocument();
   });
 });

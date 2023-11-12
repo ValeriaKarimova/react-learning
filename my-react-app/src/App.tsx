@@ -8,7 +8,6 @@ export default function App() {
     <>
       <ErrorBoundary>
         <SearchResultsProvider>
-          <h1>CASE</h1>
           <MainBlock></MainBlock>
         </SearchResultsProvider>
       </ErrorBoundary>

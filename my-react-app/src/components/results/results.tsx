@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import './results.scss';
 import { SearchContext } from '../../services/search-context';
-import { NavLink, Outlet, useParams } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate, useParams } from 'react-router-dom';
 import { Dictionary } from '../../models/response.model';
 import Header from '../header/header';
 import Loader from '../loader/loader';
@@ -12,6 +12,7 @@ interface ResultsProps {
 
 export default function Results({ url }: ResultsProps) {
   const options = [{ value: 10 }, { value: 20 }, { value: 30 }];
+  const navigate = useNavigate();
 
   const searchContext = useContext(SearchContext)?.searchContext;
   const [selected, setSelected] = useState(options[0].value);
@@ -21,6 +22,8 @@ export default function Results({ url }: ResultsProps) {
     const target = event.target as HTMLSelectElement;
     setSelected(+target.value);
     searchContext?.changePagination(+target.value);
+    const param = `?page=${+target.value}`;
+    navigate({ search: param });
   }
 
   useEffect(() => {
@@ -35,15 +38,18 @@ export default function Results({ url }: ResultsProps) {
   }
 
   const elements = [];
-  for (let i = 1; i <= searchContext.pages; i++) {
+  const pages = searchContext.pages;
+  const isLoading = searchContext.isLoading;
+
+  for (let i = 1; i <= pages; i++) {
     elements.push(
-      <span onClick={() => searchContext.loadPage(i)} key={i}>
+      <span onClick={() => searchContext.loadPage(i)} key={i} role="pagenumber">
         {i}
       </span>
     );
   }
 
-  if (searchContext.isLoading) {
+  if (isLoading) {
     return (
       <div>
         <Loader />

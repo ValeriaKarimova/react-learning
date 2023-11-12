@@ -50,10 +50,11 @@ export default function Details() {
 
   function handleClickOutside() {
     const el = ref?.current;
-    if (!el || el.contains(event!.target as Node)) {
-      return;
+    const node = event!.target as Node;
+    const isInsideEl = el && el.contains(node);
+    if (isInsideEl) {
+      navigate(domainUrl);
     }
-    navigate(domainUrl);
   }
 
   return (
@@ -66,7 +67,7 @@ export default function Details() {
             <NavLink to={domainUrl}>
               <span className="close-btn"> X </span>
             </NavLink>
-            <p className="info">
+            <p className="info" role="info">
               {detailsInfo?.map(
                 (el, idx) =>
                   typeof el[1] === 'string' && (
