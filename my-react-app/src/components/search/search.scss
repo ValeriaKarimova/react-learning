@@ -1,0 +1,24 @@
+.search {
+  &__wrapper {
+    display: flex;
+    gap: 30px;
+    height: 80px;
+    align-items: center;
+    padding: 0 30px;
+
+    &-text {
+      font-weight: 700;
+      font-size: 20px;
+    }
+  }
+
+  &__btn {
+    background-color: gray;
+    color: white;
+  }
+
+  &__input {
+    width: 200px;
+    height: 33px;
+  }
+}
